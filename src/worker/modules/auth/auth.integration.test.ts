@@ -35,6 +35,8 @@ async function registerUser(username: string, password = "test-password-123") {
     headers: { "content-type": "application/json" },
   });
   expect(res.status).toBe(200);
+  const body = (await res.json()) as { user: { username: string } };
+  expect(body.user.username).toBe(username);
   const jar: CookieJar = {};
   absorbCookies(jar, res);
   return { res, jar };
@@ -76,8 +78,7 @@ describe("auth flow on real D1", () => {
   it("registers a user, seeds categories/settings, and issues recovery codes", async () => {
     const username = uniqueUsername("hadi");
     const { res, jar } = await registerUser(username);
-    const body = await getJson(res);
-    expect(body.user.username).toBe(username);
+    void res;
     expect(jar).toHaveProperty("dakholvakharj.session_token");
 
     // Recovery codes: 8 one-time codes for the fresh user.

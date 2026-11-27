@@ -1,6 +1,7 @@
 // Seeds copied to every new user at registration (brief §4.3): the
 // Persian income/expense categories plus a settings row (Toman default).
 // Runs inside the Better Auth user.create.after hook.
+import type { BatchItem } from "drizzle-orm/batch";
 import type { DrizzleD1Database } from "drizzle-orm/d1";
 import * as schema from "../../db/schema";
 
@@ -54,7 +55,7 @@ export async function seedNewUser(
   // (10 columns → at most 8 rows per statement) and send every statement
   // in one batch: D1 has no interactive transactions (brief §3.3).
   const chunkSize = 8;
-  const statements = [
+  const statements: BatchItem<"sqlite">[] = [
     db
       .insert(schema.settings)
       .values({ userId, displayUnit: "toman", theme: "light", createdAt: now, updatedAt: now }),
@@ -62,5 +63,5 @@ export async function seedNewUser(
   for (let i = 0; i < categoryRows.length; i += chunkSize) {
     statements.push(db.insert(schema.categories).values(categoryRows.slice(i, i + chunkSize)));
   }
-  await db.batch(statements);
+  await db.batch(statements as unknown as Parameters<typeof db.batch>[0]);
 }
