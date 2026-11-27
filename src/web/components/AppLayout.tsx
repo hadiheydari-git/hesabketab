@@ -13,10 +13,17 @@ import { signOut } from "../lib/auth-client";
 
 type NavEntry = { label: string; to: string };
 
-// Stage 3 populates تراکنش‌ها/حساب‌ها/بودجه‌ها/گزارش‌ها/بدهی و طلب/طرف‌حساب‌ها.
-const NAV: NavEntry[] = [{ label: "خانه", to: "/dashboard" }];
+// Only implemented modules are listed (brief §5.1).
+const NAV: NavEntry[] = [
+  { label: "خانه", to: "/dashboard" },
+  { label: "تراکنش‌ها", to: "/transactions" },
+  { label: "حساب‌ها", to: "/accounts" },
+  { label: "بودجه‌ها", to: "/budgets" },
+  { label: "بدهی و طلب", to: "/debts" },
+  { label: "طرف‌حساب‌ها", to: "/people" },
+];
 
-const MORE: NavEntry[] = [{ label: "تنظیمات", to: "/settings/profile" }];
+const MORE: NavEntry[] = [];
 
 function navItems(entries: NavEntry[], current: string): SideNavItem[] {
   return entries.map((e) => ({
@@ -54,7 +61,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
           }
           sections={[
             { items: navItems(NAV, location.pathname) },
-            { items: navItems(MORE, location.pathname) },
+            ...(MORE.length > 0 ? [{ items: navItems(MORE, location.pathname) }] : []),
           ]}
           footer={
             <Button
@@ -116,11 +123,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         >
           +
         </NavLink>
-        {MORE.slice(0, 1).map((e) => (
-          <NavLink key={e.to} to={e.to} style={{ fontSize: 14, textDecoration: "none" }}>
-            {e.label}
-          </NavLink>
-        ))}
+        
         <button
           type="button"
           onClick={() => setMoreOpen(true)}

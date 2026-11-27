@@ -5,9 +5,9 @@ import { Hono } from "hono";
 import { and, eq, gt, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { hashPassword } from "better-auth/crypto";
-import { drizzle, type DrizzleD1Database } from "drizzle-orm/d1";
+import { drizzle } from "drizzle-orm/d1";
 import * as schema from "../../db/schema";
-import type { AppBindings } from "../../env";
+import type { AppBindings, WorkerDb } from "../../env";
 import { withSession } from "../../middleware/session";
 import {
   RECOVERY_CODE_COUNT,
@@ -27,7 +27,7 @@ async function sha256Hex(value: string): Promise<string> {
 }
 
 /** Generate fresh codes, store only their hashes (replacing all previous codes) and return the plaintext codes once. */
-export async function regenerateRecoveryCodes(db: DrizzleD1Database, userId: string): Promise<string[]> {
+export async function regenerateRecoveryCodes(db: WorkerDb, userId: string): Promise<string[]> {
   const codes = await generateRecoveryCodes(async (n) => randomBytes(n), RECOVERY_CODE_COUNT);
   const now = new Date();
   const values = await Promise.all(
@@ -89,7 +89,7 @@ export function authModule() {
       );
     }
     // Public route: build its own drizzle instance (no session middleware).
-    const orm = drizzle(c.env.DB);
+    const orm = drizzle(c.env.DB, { schema });
     const username = parsed.data.username.trim().toLowerCase();
     const code = normalizeRecoveryCode(parsed.data.code);
 

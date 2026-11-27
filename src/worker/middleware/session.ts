@@ -4,6 +4,7 @@
 // sits behind this middleware.
 import type { MiddlewareHandler } from "hono";
 import { drizzle } from "drizzle-orm/d1";
+import * as schema from "../db/schema";
 import type { AppBindings } from "../env";
 import { createAuth } from "../auth";
 
@@ -18,7 +19,7 @@ export function withSession(): MiddlewareHandler<AppBindings> {
       );
     }
     c.set("userId", session.user.id);
-    c.set("orm", drizzle(c.env.DB));
+    c.set("orm", drizzle(c.env.DB, { schema }));
     await next();
   };
 }

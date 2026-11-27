@@ -8,6 +8,12 @@ import { APP_TITLE } from "../shared/constants";
 import { createAuth } from "./auth";
 import { authModule } from "./modules/auth/routes";
 import { dashboardModule } from "./modules/dashboard/routes";
+import { accountsModule } from "./modules/accounts/routes";
+import { transactionsModule } from "./modules/transactions/routes";
+import { categoriesModule } from "./modules/categories/routes";
+import { peopleModule } from "./modules/people/routes";
+import { debtsModule } from "./modules/debts/routes";
+import { budgetsModule } from "./modules/budgets/routes";
 import { withSession } from "./middleware/session";
 import { settings, user } from "./db/schema";
 
@@ -57,6 +63,12 @@ app.get("/api/me", withSession(), async (c) => {
 
 app.route("/", authModule());
 app.route("/", dashboardModule());
+app.route("/", accountsModule());
+app.route("/", transactionsModule());
+app.route("/", categoriesModule());
+app.route("/", peopleModule());
+app.route("/", debtsModule());
+app.route("/", budgetsModule());
 
 // Within the Worker (run_worker_first matches /api/* only), unknown paths
 // get a JSON 404; all other paths are served as static SPA assets.

@@ -9,6 +9,12 @@ import { Login } from "../routes/Login";
 import { Register } from "../routes/Register";
 import { ForgotPassword } from "../routes/ForgotPassword";
 import { Dashboard } from "../routes/Dashboard";
+import { Transactions } from "../routes/Transactions";
+import { TransactionEdit, TransactionNew } from "../routes/TransactionForm";
+import { AccountDetail, Accounts } from "../routes/Accounts";
+import { Debts } from "../routes/Debts";
+import { Budgets } from "../routes/Budgets";
+import { People } from "../routes/People";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
@@ -28,6 +34,94 @@ export function App() {
               element={
                 <RequireAuth>
                   <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/transactions"
+              element={
+                <RequireAuth>
+                  <Transactions />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/transactions/new"
+              element={
+                <RequireAuth>
+                  <TransactionNew />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/transactions/:id/edit"
+              element={
+                <RequireAuth>
+                  <TransactionEdit />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/accounts"
+              element={
+                <RequireAuth>
+                  <Accounts />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/accounts/new"
+              element={
+                <RequireAuth>
+                  <Accounts />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/accounts/:id"
+              element={
+                <RequireAuth>
+                  <AccountDetail />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/debts"
+              element={
+                <RequireAuth>
+                  <Debts />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/debts/new"
+              element={
+                <RequireAuth>
+                  <Debts />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/budgets"
+              element={
+                <RequireAuth>
+                  <Budgets />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/budgets/new"
+              element={
+                <RequireAuth>
+                  <Budgets />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/people"
+              element={
+                <RequireAuth>
+                  <People />
                 </RequireAuth>
               }
             />
