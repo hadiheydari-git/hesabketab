@@ -18,9 +18,8 @@
     {
       "binding": "DB",
       "database_name": "dakholvakharj-db",
-      // Blocked: D1 creation needs a valid Cloudflare API token
-      // (current token rejected with code 1000 — see docs/deploy.md).
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      // Provisioned 2026-11-27 via API (APAC region).
+      "database_id": "13d2c38f-67bf-4fdb-9cce-edc08910dc34",
       // SQL migrations live in drizzle/ (drizzle-kit output).
       "migrations_dir": "drizzle"
     }
