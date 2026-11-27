@@ -21,6 +21,8 @@ const NAV: NavEntry[] = [
   { label: "بودجه‌ها", to: "/budgets" },
   { label: "بدهی و طلب", to: "/debts" },
   { label: "طرف‌حساب‌ها", to: "/people" },
+  { label: "گزارش‌ها", to: "/reports" },
+  { label: "تنظیمات", to: "/settings" },
 ];
 
 const MORE: NavEntry[] = [];

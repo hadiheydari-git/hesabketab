@@ -14,6 +14,8 @@ import { categoriesModule } from "./modules/categories/routes";
 import { peopleModule } from "./modules/people/routes";
 import { debtsModule } from "./modules/debts/routes";
 import { budgetsModule } from "./modules/budgets/routes";
+import { reportsModule } from "./modules/reports/routes";
+import { settingsModule } from "./modules/settings/routes";
 import { withSession } from "./middleware/session";
 import { settings, user } from "./db/schema";
 
@@ -69,6 +71,8 @@ app.route("/", categoriesModule());
 app.route("/", peopleModule());
 app.route("/", debtsModule());
 app.route("/", budgetsModule());
+app.route("/", reportsModule());
+app.route("/", settingsModule());
 
 // Within the Worker (run_worker_first matches /api/* only), unknown paths
 // get a JSON 404; all other paths are served as static SPA assets.

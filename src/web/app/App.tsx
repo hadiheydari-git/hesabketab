@@ -15,6 +15,8 @@ import { AccountDetail, Accounts } from "../routes/Accounts";
 import { Debts } from "../routes/Debts";
 import { Budgets } from "../routes/Budgets";
 import { People } from "../routes/People";
+import { Reports } from "../routes/Reports";
+import { Settings } from "../routes/Settings";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
@@ -122,6 +124,62 @@ export function App() {
               element={
                 <RequireAuth>
                   <People />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/reports"
+              element={
+                <RequireAuth>
+                  <Reports />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <RequireAuth>
+                  <Settings />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/settings/profile"
+              element={
+                <RequireAuth>
+                  <Settings />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/settings/preferences"
+              element={
+                <RequireAuth>
+                  <Settings />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/settings/categories"
+              element={
+                <RequireAuth>
+                  <Settings />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/settings/security"
+              element={
+                <RequireAuth>
+                  <Settings />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/settings/data-management"
+              element={
+                <RequireAuth>
+                  <Settings />
                 </RequireAuth>
               }
             />
