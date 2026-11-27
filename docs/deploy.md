@@ -1,6 +1,6 @@
 # Deployment
 
-Status: Stage 0. The pipeline is fully wired; **live deployment is currently blocked by an invalid Cloudflare API token** (see Current state).
+Status: Stage 0. **Deployed and verified live** at `https://dakholvakharj.hadiheydari.workers.dev` (2026-11-27).
 
 ## Pipeline
 
@@ -42,5 +42,6 @@ Drizzle-kit generates SQL into `drizzle/` (Stage 1+). Apply locally with `wrangl
 
 ## Current state (Stage 0)
 
-- GitHub side: token valid, repo `hadiheydari-git/hesabketab` reachable and empty, full push/admin permissions confirmed.
-- Cloudflare side: **BLOCKED** — the provided API token is rejected by `GET /user/tokens/verify` with error code **1000 "Invalid API Token"** (revoked, rotated, or mistyped). Consequences: D1 database creation, Worker deploy, `BETTER_AUTH_SECRET` storage and live verification are all paused and will NOT be faked. Everything resumes the moment a valid token is provided and `CLOUDFLARE_API_TOKEN` is updated (repo secret + local env).
+- Cloudflare side: **DONE** — new account-scoped API token verified against account endpoints (`/user/tokens/verify` misleadingly returns code 1000 for account-scoped tokens; real confirmation came from successful account API calls). D1 database `dakholvakharj-db` (`13d2c38f-67bf-4fdb-9cce-edc08910dc34`, APAC) created and wired into `wrangler.jsonc`. Worker `dakholvakharj` deployed (version `56865a97`), `BETTER_AUTH_SECRET` stored via `wrangler secret put`.
+- Live verification (2026-11-27): `GET /api/health` → `200 {"ok":true,"name":"دخل‌وخرج",...}`; SPA root serves RTL Persian HTML; unknown non-API paths fall back to `index.html` (200); unknown `/api/*` paths return a JSON 404.
+- GitHub side: **partially blocked** — the briefing file stores the GitHub token behind a redaction placeholder, so the value is no longer available to the build environment. The `wrangler.jsonc` D1 wiring commit is ready locally; a push and setting the Actions secrets `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` need the token (with Secrets read/write) pasted again, or the two secrets can be added manually under Settings → Secrets and variables → Actions. Until the secrets exist, `deploy.yml` runs will fail at the Cloudflare step (expected).
