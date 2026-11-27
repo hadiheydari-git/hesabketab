@@ -1,0 +1,61 @@
+/*
+ * Stage 0 bootstrap styles — minimal, RTL, placeholder palette.
+ * Stage 1 replaces every value here with Kashi design tokens
+ * (see docs/design-system.md); do not grow this file.
+ */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --muted: #64748b;
+  --primary: #047857;
+  --border: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    Vazirmatn,
+    "Segoe UI",
+    Tahoma,
+    sans-serif;
+  line-height: 1.7;
+}
+
+.hello {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: 24px;
+}
+
+.hello h1 {
+  font-size: 28px;
+  margin: 32px 0 8px;
+  color: var(--primary);
+}
+
+.hello p {
+  margin: 4px 0;
+  color: var(--muted);
+}
+
+.status {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+}

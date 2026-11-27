@@ -1,0 +1,6 @@
+# Copy to .dev.vars (gitignored) for local development.
+# Never commit .dev.vars. Values below are placeholders, not real secrets.
+
+# Session signing secret, at least 32 random bytes.
+# Generate with: openssl rand -hex 32
+BETTER_AUTH_SECRET=replace-with-32-plus-random-bytes

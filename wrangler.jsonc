@@ -1,0 +1,31 @@
+// Cloudflare Worker + SPA configuration for «دخل‌وخرج».
+// Worker name and title rationale: docs/adr/0001-domain-and-naming.md
+// Public URL: <name>.<account-subdomain>.workers.dev (ADR-0001).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dakholvakharj",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  // Required by Better Auth's node-facing dependencies from Stage 1.
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    // SPA fallback: unknown non-API paths serve index.html.
+    "not_found_handling": "single-page-application",
+    // The Worker handles /api/* first; assets serve everything else.
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dakholvakharj-db",
+      // Blocked: D1 creation needs a valid Cloudflare API token
+      // (current token rejected with code 1000 — see docs/deploy.md).
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      // SQL migrations live in drizzle/ (drizzle-kit output).
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
