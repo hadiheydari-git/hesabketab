@@ -1,6 +1,6 @@
 # Database schema
 
-Status: Stage 0 plan. The ERD is finalized at Stage 1 together with the first Drizzle migration; every later change goes through drizzle-kit migrations in `drizzle/`.
+Status: implemented in Stage 1 (`src/worker/db/schema.ts`, migrations in `drizzle/`). Every later change goes through drizzle-kit migrations. Better Auth core tables (`user`, `session`, `account`, `verification`) were generated with the official Better Auth CLI for the installed version; the app adds `recovery_code`, `settings`, `rate_limit` and the financial tables. `transaction.amount_minor` is stored **positive** — the sign comes from the type via `signedEffect()` in `src/shared/domain/finance.ts`.
 
 ## Conventions
 

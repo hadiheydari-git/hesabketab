@@ -1,27 +1,41 @@
-import { useEffect, useState } from "react";
-import { APP_TITLE } from "../../shared/constants";
+// App routes (docs/routes.md): auth pages are public, everything else
+// requires a session (Stage 2 adds the full app shell + layout).
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { KashiProvider } from "@kashi-ui/react";
+import { Toaster } from "@kashi-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RequireAuth } from "../components/RequireAuth";
+import { Login } from "../routes/Login";
+import { Register } from "../routes/Register";
+import { ForgotPassword } from "../routes/ForgotPassword";
+import { DashboardStub } from "../routes/DashboardStub";
 
-// Stage 0 skeleton page: proves the SPA + Worker + D1 pipeline end to end.
-// The real RTL shell, Kashi components and fonts arrive in Stages 1–2.
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
+});
+
 export function App() {
-  const [state, setState] = useState<"checking" | "ok" | "down">("checking");
-
-  useEffect(() => {
-    fetch("/api/health")
-      .then((res) => (res.ok ? Promise.resolve(res) : Promise.reject(new Error(String(res.status)))))
-      .then(() => setState("ok"))
-      .catch(() => setState("down"));
-  }, []);
-
   return (
-    <main className="hello">
-      <h1>{APP_TITLE}</h1>
-      <p>اسکلت اولیه راه‌اندازی شد.</p>
-      <p className="status" role="status">
-        {state === "checking" && "در حال بررسی وضعیت…"}
-        {state === "ok" && "وضعیت سامانه: متصل"}
-        {state === "down" && "وضعیت سامانه: قطع"}
-      </p>
-    </main>
+    <KashiProvider locale="fa">
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <DashboardStub />
+                </RequireAuth>
+              }
+            />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+          <Toaster placement="bottom-end" />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </KashiProvider>
   );
 }

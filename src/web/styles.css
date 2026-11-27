@@ -1,61 +1,54 @@
-/*
- * Stage 0 bootstrap styles — minimal, RTL, placeholder palette.
- * Stage 1 replaces every value here with Kashi design tokens
- * (see docs/design-system.md); do not grow this file.
- */
-:root {
-  --bg: #f6f7f8;
-  --surface: #ffffff;
-  --text: #1f2937;
-  --muted: #64748b;
-  --primary: #047857;
-  --border: #e2e8f0;
-}
+/* Base styles: self-hosted Vazirmatn, RTL-first, Kashi tokens only. */
 
-* {
-  box-sizing: border-box;
+:root {
+  color-scheme: light dark;
 }
 
 html,
-body,
-#root {
-  min-height: 100%;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Vazirmatn", "Inter", system-ui, sans-serif;
+  font-feature-settings: "ss02"; /* tabular Persian numerals */
 }
 
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family:
-    Vazirmatn,
-    "Segoe UI",
-    Tahoma,
-    sans-serif;
-  line-height: 1.7;
+  background: var(--k-color-bg, #f6f7f9);
+  color: var(--k-color-fg, #1c2430);
+  min-height: 100vh;
 }
 
-.hello {
-  max-width: 1100px;
-  margin-inline: auto;
+/* LTR islands inside RTL text (usernames, codes, numbers) */
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Centered auth card layout */
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
   padding: 24px;
 }
 
-.hello h1 {
-  font-size: 28px;
-  margin: 32px 0 8px;
-  color: var(--primary);
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  display: grid;
+  gap: 24px;
 }
 
-.hello p {
-  margin: 4px 0;
-  color: var(--muted);
+.auth-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
 }
 
-.status {
-  margin-top: 16px;
-  padding: 12px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
+.auth-subtitle {
+  margin: 0;
+  color: var(--k-color-fg-muted, #5b6676);
+  text-align: center;
+  font-size: 14px;
 }
