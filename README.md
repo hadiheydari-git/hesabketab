@@ -17,7 +17,20 @@ A Persian-first personal finance web app for Iranian users: track, budget, under
 
 ## Status
 
-Stage 0 (Bootstrap). See `docs/mvp-plan.md` for the stage plan and `docs/stage-reports/` for progress. Live URL: pending a valid Cloudflare API token (see `docs/deploy.md`).
+**MVP complete (Stages 0–5).** Live at https://dakholvakharj.hadiheydari.workers.dev
+
+Implemented: username-only auth with 8 one-time recovery codes (no email),
+accounts, 7 transaction types with atomic transfers, categories (Persian
+seeds), people (طرف‌حساب‌ها), debts and receivables with repayments,
+monthly budgets with utilization states, Jalali reports with
+previous-period comparison, settings (display unit Toman/Rial, theme,
+password change, recovery-code regeneration, JSON export, full account
+deletion). Persian RTL UI, self-hosted Vazirmatn, Jalali calendar
+(Saturday-start weeks), money stored as integer Rial and displayed as
+Toman by default.
+
+See `docs/mvp-plan.md` for the stage plan and `docs/stage-reports/` for
+per-stage reports.
 
 ## Setup
 
@@ -40,7 +53,8 @@ Environment variables / secrets:
 ```sh
 npm run typecheck   # tsc (web + worker)
 npm run lint        # eslint
-npm test            # vitest
+npm test            # vitest (unit + component + integration on real D1)
+npm run test:e2e    # Playwright: full journey on wrangler dev (local D1)
 npm run build       # vite build (client + worker)
 npm run deploy      # wrangler deploy (requires Cloudflare credentials in env)
 ```

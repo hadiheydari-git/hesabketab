@@ -17,9 +17,13 @@ import { budgetsModule } from "./modules/budgets/routes";
 import { reportsModule } from "./modules/reports/routes";
 import { settingsModule } from "./modules/settings/routes";
 import { withSession } from "./middleware/session";
+import { securityHeaders } from "./middleware/security";
 import { settings, user } from "./db/schema";
 
 const app = new Hono<AppBindings>();
+
+// Security headers on everything the Worker serves (assets + API).
+app.use("*", securityHeaders());
 
 // Health is public and dependency-free.
 app.get("/api/health", (c) =>

@@ -26,5 +26,9 @@
   ],
   "observability": {
     "enabled": true
+  },
+  "vars": {
+    // Public base URL (ADR-0001); local dev overrides it via .dev.vars.
+    "APP_URL": "https://dakholvakharj.hadiheydari.workers.dev"
   }
 }

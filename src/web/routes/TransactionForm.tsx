@@ -19,7 +19,7 @@ import {
   Textarea,
 } from "@kashi-ui/react";
 import { Page, PageHeader } from "../components/ui/Page";
-import { useAccounts, useCategories, usePeople, useTransaction, type TransactionDetailDto } from "../lib/queries";
+import { useAccounts, useCategories, usePeople, useTransaction, useTransactions, type TransactionDetailDto } from "../lib/queries";
 import { tomanToRial } from "../../shared/domain/money";
 import { dayKeyOf } from "../../shared/domain/jalali";
 import type { TransactionType } from "../../shared/domain/finance";
@@ -225,7 +225,20 @@ function toInitial(data?: TransactionDetailDto): Initial {
 }
 
 export function TransactionNew() {
-  return <Inner initial={toInitial()} />;
+  // Brief §5.2: the account defaults to the last used one, the date to today.
+  const recent = useTransactions({ page: "1", pageSize: "1" });
+  const lastAccountId = recent.data?.transactions[0]?.accountId;
+  if (recent.isLoading) {
+    return (
+      <Page>
+        <PageHeader title="ثبت تراکنش" />
+        <Skeleton height={320} />
+      </Page>
+    );
+  }
+  const initial = toInitial();
+  if (lastAccountId) initial.accountId = lastAccountId;
+  return <Inner key={lastAccountId ?? "new"} initial={initial} />;
 }
 
 export function TransactionEdit() {

@@ -25,7 +25,13 @@ export function createAuth(env: AuthEnv) {
   return betterAuth({
     baseURL: env.APP_URL,
     secret: env.BETTER_AUTH_SECRET,
-    trustedOrigins: [env.APP_URL, "http://localhost:5173", "http://127.0.0.1:5173"],
+    trustedOrigins: [
+      env.APP_URL,
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "http://localhost:8788",
+      "http://127.0.0.1:8788",
+    ].filter((x): x is string => Boolean(x)),
     database: drizzleAdapter(orm, {
       provider: "sqlite",
       schema,
