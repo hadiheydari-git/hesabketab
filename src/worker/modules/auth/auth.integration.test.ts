@@ -92,7 +92,9 @@ describe("auth flow on real D1", () => {
     const cats = await env.DB.prepare("SELECT kind, COUNT(*) AS n FROM category WHERE user_id = ? GROUP BY kind")
       .bind(user!.id)
       .all();
-    const kinds = Object.fromEntries(cats.results.map((r: JsonRecord) => [r.kind, r.n]));
+    const kinds = Object.fromEntries(
+      cats.results.map((r) => [String(r.kind), Number(r.n)] as const),
+    );
     expect(kinds.income).toBe(7);
     expect(kinds.expense).toBe(13);
 
