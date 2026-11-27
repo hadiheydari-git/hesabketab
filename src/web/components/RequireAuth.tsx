@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Navigate } from "react-router";
 import { Skeleton, Spinner } from "@kashi-ui/react";
 import { useSession } from "../lib/auth-client";
+import { AppLayout } from "./AppLayout";
 
 export function RequireAuth({ children }: { children: ReactNode }) {
   const { data, isPending } = useSession();
@@ -20,5 +21,5 @@ export function RequireAuth({ children }: { children: ReactNode }) {
     );
   }
   if (!data?.session) return <Navigate to="/login" replace />;
-  return <>{children}</>;
+  return <AppLayout>{children}</AppLayout>;
 }

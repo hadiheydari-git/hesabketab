@@ -8,7 +8,7 @@ import { RequireAuth } from "../components/RequireAuth";
 import { Login } from "../routes/Login";
 import { Register } from "../routes/Register";
 import { ForgotPassword } from "../routes/ForgotPassword";
-import { DashboardStub } from "../routes/DashboardStub";
+import { Dashboard } from "../routes/Dashboard";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
@@ -27,7 +27,7 @@ export function App() {
               path="/dashboard"
               element={
                 <RequireAuth>
-                  <DashboardStub />
+                  <Dashboard />
                 </RequireAuth>
               }
             />

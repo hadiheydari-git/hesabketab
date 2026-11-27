@@ -7,6 +7,7 @@ import type { AppBindings } from "./env";
 import { APP_TITLE } from "../shared/constants";
 import { createAuth } from "./auth";
 import { authModule } from "./modules/auth/routes";
+import { dashboardModule } from "./modules/dashboard/routes";
 import { withSession } from "./middleware/session";
 import { settings, user } from "./db/schema";
 
@@ -55,6 +56,7 @@ app.get("/api/me", withSession(), async (c) => {
 });
 
 app.route("/", authModule());
+app.route("/", dashboardModule());
 
 // Within the Worker (run_worker_first matches /api/* only), unknown paths
 // get a JSON 404; all other paths are served as static SPA assets.
