@@ -42,12 +42,6 @@ async function registerUser(username: string, password = "test-password-123") {
   return { res, jar };
 }
 
-type JsonRecord = Record<string, unknown>;
-
-async function getJson(res: Response): Promise<JsonRecord> {
-  return res.json();
-}
-
 let counter = 0;
 const uniqueUsername = (base: string) => `${base}${Date.now().toString(36)}${(counter += 1)}`;
 
